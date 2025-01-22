@@ -7,17 +7,7 @@ async function query(queryObjetct) {
     user: process.env.POSTGRES_USER,
     database: process.env.POSTGRES_DB,
     password: process.env.POSTGRES_PASSWORD,
-    ssl: {
-      rejectUnauthorized: false, // Desabilita a verificação de certificados não confiáveis
-      sslmode: "require", // Garante que a conexão usará SSL
-    },
-  });
-  console.log("Credenciais do Postgres", {
-    host: process.env.POSTGRES_HOST,
-    port: process.env.POSTGRES_PORT,
-    user: process.env.POSTGRES_USER,
-    database: process.env.POSTGRES_DB,
-    password: process.env.POSTGRES_PASSWORD,
+    ssl: getSSLValues(),
   });
 
   try {
@@ -36,3 +26,12 @@ async function query(queryObjetct) {
 export default {
   query: query,
 };
+
+function getSSLValues() {
+  if (process.env.PORSGRES_CA) {
+    return {
+      cs: process.env.PORSGRES_CA,
+    };
+  }
+  return process.env.NODE_ENV === "development" ? false : true;
+}
