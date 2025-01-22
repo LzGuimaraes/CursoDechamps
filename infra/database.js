@@ -7,7 +7,10 @@ async function query(queryObjetct) {
     user: process.env.POSTGRES_USER,
     database: process.env.POSTGRES_DB,
     password: process.env.POSTGRES_PASSWORD,
-    ssl: process.env.NODE_ENV === "development" ? false : true,
+    ssl: {
+      rejectUnauthorized: false, // Desabilita a verificação de certificados não confiáveis
+      sslmode: "require", // Garante que a conexão usará SSL
+    },
   });
   console.log("Credenciais do Postgres", {
     host: process.env.POSTGRES_HOST,
