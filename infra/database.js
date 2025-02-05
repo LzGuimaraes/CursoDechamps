@@ -33,9 +33,9 @@ export default {
 };
 
 function getSSLValues() {
-  if (process.env.PORSGRES_CA) {
+  if (process.env.POSTGRES_CA) {
     return {
-      cs: process.env.PORSGRES_CA,
+      cs: process.env.POSTGRES_CA,
     };
   }
 
